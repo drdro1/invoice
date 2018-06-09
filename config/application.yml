@@ -1,0 +1,13 @@
+server.port: 8080
+logging.level.springframework.web: DEBUG
+
+mongo:
+ mainDatabase: invoice
+ metricsDatabase: invoices
+
+earliest.query.month: 200001
+
+
+
+
+
