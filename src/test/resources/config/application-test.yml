@@ -1,0 +1,10 @@
+server.port: 8080
+logging.level.springframework.web: DEBUG
+
+etherscan.url: http://api.etherscan.io
+
+mongo:
+ mainDatabase: invoice
+ metricsDatabase: invoices
+
+earliest.query.month: 200001
