@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 /**
  * Created by alejandrosantamaria on 09/06/18.
  */
@@ -19,7 +21,7 @@ public class EthereumTransaction {
     private Long transactionIndex;
     private String from;
     private String to;
-    private String value;
+    private BigInteger value;
     private Long gas;
     private Long gasPrice;
     private Integer isError;

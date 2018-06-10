@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Created by alejandrosantamaria on 10/06/18.
  */
@@ -23,19 +25,24 @@ public class EthereumTransactionProvider {
     @Value("${etherscan.url}")
     private String etherscanUrl;
 
-    @Cacheable(value = "eththx", key = "#address")
-    public EthereumTransactionsMessage getEtherscanTransactions(String address){
-        log.info("Calling etherscan transactions with address:{}", address);
+    private EtherscanClient etherscanClient;
 
-        EtherscanClient etherscanClient = Feign.builder()
+    @PostConstruct
+    private void init(){
+        this.etherscanClient = Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
                 .logger(new Slf4jLogger(EtherscanClient.class))
                 .logLevel(Logger.Level.FULL)
                 .target(EtherscanClient.class, etherscanUrl);
+    }
 
-        EthereumTransactionsMessage transactionList = etherscanClient.getTransactions("account",
+    @Cacheable(value = "eththx", key = "#address")
+    public EthereumTransactionsMessage getEtherscanTransactions(String address){
+        log.info("Calling etherscan transactions with address:{}", address);
+
+        EthereumTransactionsMessage ethereumTransactionsMessage = etherscanClient.getTransactions("account",
                 "txlist",
                 address,
                 0,
@@ -43,6 +50,6 @@ public class EthereumTransactionProvider {
                 "asc",
                 "YourApiKeyToken");
 
-        return transactionList;
+        return ethereumTransactionsMessage;
     }
 }
