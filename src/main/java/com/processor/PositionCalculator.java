@@ -1,7 +1,7 @@
 package com.processor;
 
-import com.model.DailyReport;
-import com.model.Ethereum.EthereumTransaction;
+import com.model.ethereum.EthereumTransaction;
+import com.model.report.DailyReport;
 import com.utils.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -20,21 +19,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class PositionCalculator {
-    public Map<LocalDate, BigInteger> calculate(List<EthereumTransaction> transactionList) {
-
-        Map<LocalDate, BigInteger> mapValuePerDay = transactionList.stream()
-                .collect(Collectors.groupingBy(ethereumTransaction ->
-                                DateTimeUtils.unixTimestampToLocalDate(ethereumTransaction.getTimeStamp()),
-                        Collectors.reducing(BigInteger.ZERO,
-                        EthereumTransaction::getValue,
-                        BigInteger::add)));
-
-
-        TreeMap<LocalDate, BigInteger> treeMap = new TreeMap<>(mapValuePerDay);
-        treeMap.entrySet().stream().forEach(entry->{System.out.println(entry.getKey() + "=" + entry.getValue());});
-
-        return mapValuePerDay;
-    }
 
     public Map<LocalDate, List<EthereumTransaction>> getMapListDailyTransactions(
             List<EthereumTransaction> transactionList) {
@@ -84,8 +68,8 @@ public class PositionCalculator {
         BigInteger total = transactionList.stream()
                 .map(ethereumTransaction -> {
                     if (ethereumTransaction.getFrom().equals(address)) {
-                        long txFeeGas = 0;//-1 * ethereumTransaction.getGasUsed() * ethereumTransaction.getGasPrice();
-                        return ethereumTransaction.getValue().negate();//.add(BigInteger.valueOf(txFeeGas));
+                        long txFeeGas = -1 * ethereumTransaction.getGasUsed() * ethereumTransaction.getGasPrice();
+                        return ethereumTransaction.getValue().negate().add(BigInteger.valueOf(txFeeGas));
                     }
                     return ethereumTransaction.getValue();
                 })

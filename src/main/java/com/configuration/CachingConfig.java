@@ -14,7 +14,12 @@ import org.springframework.context.annotation.Configuration;
 public class CachingConfig {
 
     @Bean
-    public CacheManager cacheManager() {
+    public CacheManager eththxCache() {
         return new ConcurrentMapCacheManager("eththx");
+    }
+
+    @Bean
+    public CacheManager ethusdCache() {
+        return new ConcurrentMapCacheManager("ethusd");
     }
 }

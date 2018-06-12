@@ -1,8 +1,8 @@
 package com.processor;
 
-import com.model.DailyReport;
-import com.model.Ethereum.EthereumTransaction;
-import com.model.Ethereum.EthereumTransactionsMessage;
+import com.model.report.DailyReport;
+import com.model.ethereum.EthereumTransaction;
+import com.model.ethereum.EthereumTransactionsMessage;
 import com.provider.EthereumTransactionProvider;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;

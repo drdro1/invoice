@@ -1,6 +1,7 @@
-package com.model;
+package com.model.report;
 
-import com.model.Ethereum.EthereumTransaction;
+import com.model.ethereum.EthereumTransaction;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by alejandrosantamaria on 10/06/18.
  */
+@Getter
 @Setter
 @NoArgsConstructor
 public class DailyReport {

@@ -11,6 +11,7 @@ import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -39,7 +40,7 @@ public class ExchangeProvider {
                 .target(CryptoCompareClient.class, cryptoCompareUrl);
     }
 
-//    @Cacheable(value = "ethusd", key = "#date")
+    @Cacheable(value = "ethusd", key = "#localDate")
     public Double getEtherUsd(LocalDate localDate) {
         log.info("Calling CryptoCompare:{}", localDate);
 

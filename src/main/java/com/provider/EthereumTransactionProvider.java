@@ -1,7 +1,7 @@
 package com.provider;
 
 import com.client.EtherscanClient;
-import com.model.Ethereum.EthereumTransactionsMessage;
+import com.model.ethereum.EthereumTransactionsMessage;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
