@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,9 +20,7 @@ import java.util.List;
 @SpringBootTest
 @ActiveProfiles("test")
 public class EthereumTransactionProviderTest extends TestCase {
-
-    @InjectMocks
-    private EthereumTransactionProvider ethereumTransactionProvider;
+    @Autowired private EthereumTransactionProvider ethereumTransactionProvider;
 
     @Test
     public void testGetEtherscanTransactions() throws Exception {
@@ -31,6 +29,7 @@ public class EthereumTransactionProviderTest extends TestCase {
         Assert.assertNotNull(ethtxmsg);
 
         List<EthereumTransaction> transactionList = ethtxmsg.getResult();
+
         Assert.assertNotNull(transactionList);
         Assert.assertFalse(transactionList.isEmpty());
     }

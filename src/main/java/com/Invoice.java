@@ -1,8 +1,6 @@
 package com;
 
-import com.model.Ethereum.EthereumTransaction;
 import com.model.Ethereum.EthereumTransactionsMessage;
-import com.model.Exchange;
 import com.processor.PositionCalculator;
 import com.provider.EthereumTransactionProvider;
 import com.provider.ExchangeProvider;
@@ -12,10 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 @Slf4j
@@ -32,22 +26,7 @@ public class Invoice implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		testCryptoCompare();
-	}
-
-	private void testCryptoCompare(){
-		Exchange exchange = exchangeProvider.getEtherUsd(LocalDate.of(2018, 6, 5));
-		log.info("ethusd = {}", exchange);
-	}
-
-	private void testStream(){
-		long millis = System.currentTimeMillis();
-		EthereumTransactionsMessage ethTxMsg = ethereumTransactionProvider.getEtherscanTransactions("0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae");
-		log.info("Time={}", (System.currentTimeMillis() - millis));
-
-		Map<LocalDate, List<EthereumTransaction>> mapListDailyTransactions =
-				positionCalculator.getMapListDailyTransactions(ethTxMsg.getResult());
-
+//		testCryptoCompare();
 	}
 
 	private void testCache() throws Exception {

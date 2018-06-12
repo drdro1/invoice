@@ -1,0 +1,5 @@
+server.port=8080
+logging.level.springframework.web= DEBUG
+
+etherscan.url=http://api.etherscan.io
+cryptocompare.url=https://min-api.cryptocompare.com/

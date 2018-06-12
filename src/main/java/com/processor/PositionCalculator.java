@@ -2,13 +2,13 @@ package com.processor;
 
 import com.model.DailyReport;
 import com.model.Ethereum.EthereumTransaction;
-import com.model.FullReport;
 import com.utils.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -47,36 +47,46 @@ public class PositionCalculator {
         return mapDailyTx;
     }
 
-    public void generateFullReport(List<EthereumTransaction> transactionList,
+    public Map<LocalDate, DailyReport> generateFullReport(List<EthereumTransaction> txList,
                     String address, Map<LocalDate,
                     List<EthereumTransaction>> mapDailyTransactions){
 
-        FullReport fullReport = new FullReport();
+        Map<LocalDate, DailyReport> dailyReportMap = new HashMap<>();
 
-        LocalDate dateIterator = DateTimeUtils.unixTimestampToLocalDate(transactionList.get(0).getTimeStamp());
-        LocalDate lastDate = DateTimeUtils.unixTimestampToLocalDate(transactionList.get(transactionList.size()-1).getTimeStamp());
+        LocalDate dateIterator = DateTimeUtils.unixTimestampToLocalDate(txList.get(0).getTimeStamp());
+        LocalDate lastDate = DateTimeUtils.unixTimestampToLocalDate(txList.get(txList.size()-1).getTimeStamp());
 
         BigInteger total = new BigInteger("0");
         for(;!dateIterator.isAfter(lastDate); dateIterator = dateIterator.plusDays(1)){
-            List<EthereumTransaction> listTransactions = mapDailyTransactions.get(dateIterator);
+            List<EthereumTransaction> dayTxs = mapDailyTransactions.get(dateIterator);
 
-            BigInteger dayTotal = sumTransactions(transactionList, address);
-            total = total.add(dayTotal);
+            if ( dayTxs != null ) {
+                BigInteger dayTotal = sumTransactions(dayTxs, address);
+                total = total.add(dayTotal);
 
-            DailyReport dailyReport = new DailyReport();
-            dailyReport.setTransactionList(listTransactions);
-            dailyReport.setTotalBalance(total);
-            dailyReport.setDayBalance(dayTotal);
+                DailyReport dailyReport = new DailyReport();
+                dailyReport.setTransactionList(dayTxs);
+                dailyReport.setTotalBalance(total);
+                dailyReport.setDayBalance(dayTotal);
 
-            fullReport.putDailyReport(dateIterator, dailyReport);
+                dailyReportMap.put(dateIterator, dailyReport);
+                System.out.println(dateIterator + "," + dayTxs.size() + "," + total);
+            }else
+                System.out.println(dateIterator + "," + 0 + "," + total);
+
+//            log.info("For dateIterator={} totalBalance{}", dateIterator, total);
         }
+
+        return dailyReportMap;
     }
 
     private BigInteger sumTransactions(List<EthereumTransaction> transactionList, String address){
         BigInteger total = transactionList.stream()
                 .map(ethereumTransaction -> {
-                    if (ethereumTransaction.getFrom().equals(address))
-                        return ethereumTransaction.getValue().negate();
+                    if (ethereumTransaction.getFrom().equals(address)) {
+                        long txFeeGas = 0;//-1 * ethereumTransaction.getGasUsed() * ethereumTransaction.getGasPrice();
+                        return ethereumTransaction.getValue().negate();//.add(BigInteger.valueOf(txFeeGas));
+                    }
                     return ethereumTransaction.getValue();
                 })
                 .reduce(BigInteger.ZERO, BigInteger::add);

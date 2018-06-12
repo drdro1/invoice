@@ -3,9 +3,3 @@ logging.level.springframework.web: DEBUG
 
 etherscan.url: http://api.etherscan.io
 cryptocompare.url: https://min-api.cryptocompare.com/
-
-mongo:
- mainDatabase: invoice
- metricsDatabase: invoices
-
-earliest.query.month: 200001

@@ -2,7 +2,7 @@ package com.provider;
 
 import com.client.CryptoCompareClient;
 import com.client.EtherscanClient;
-import com.model.Exchange;
+import com.utils.DateTimeUtils;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 /**
  * Created by alejandrosantamaria on 10/06/18.
@@ -39,11 +40,20 @@ public class ExchangeProvider {
     }
 
 //    @Cacheable(value = "ethusd", key = "#date")
-    public Exchange getEtherUsd(LocalDate localDate) {
+    public Double getEtherUsd(LocalDate localDate) {
         log.info("Calling CryptoCompare:{}", localDate);
 
-        Exchange exchange = cryptoCompareClient.convert("ETH", "USD", 1452680400);
+        Double toRet = null;
 
-        return exchange;
+        HashMap<String, HashMap<String, Double>> mapResult = cryptoCompareClient.convert(
+                "ETH", "USD", DateTimeUtils.localDateToTimestamp(localDate));
+
+        if ( mapResult != null ){
+            HashMap<String, Double> mapEth = mapResult.get("ETH");
+            if ( mapEth != null )
+             toRet = mapEth.get("USD");
+        }
+
+        return toRet;
     }
 }

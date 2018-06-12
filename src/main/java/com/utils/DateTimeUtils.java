@@ -9,12 +9,14 @@ import java.time.ZoneId;
  */
 public class DateTimeUtils {
 
+    private static ZoneId ZONE_UTC = ZoneId.of("UTC");
+
     public static LocalDate unixTimestampToLocalDate(long unixTimestamp){
-        LocalDate ld = Instant.ofEpochMilli(unixTimestamp * 1000).atZone(ZoneId.of("UTC")).toLocalDate();
+        LocalDate ld = Instant.ofEpochMilli(unixTimestamp * 1000).atZone(ZONE_UTC).toLocalDate();
         return ld;
     }
 
     public static long localDateToTimestamp(LocalDate localDate){
-        return localDate.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
+        return localDate.atStartOfDay(ZONE_UTC).toEpochSecond();
     }
 }
