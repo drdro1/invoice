@@ -38,7 +38,7 @@ public class EthereumTransactionProvider {
                 .target(EtherscanClient.class, etherscanUrl);
     }
 
-    @Cacheable(value = "eththx", key = "#address")
+    @Cacheable(value = "ethtx", key = "#address")
     public EthereumTransactionsMessage getEtherscanTransactions(String address){
         log.info("Calling etherscan transactions with address:{}", address);
 

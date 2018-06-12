@@ -1,8 +1,6 @@
 package com.utils;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 
 /**
  * Created by alejandrosantamaria on 10/06/18.
@@ -16,7 +14,7 @@ public class DateTimeUtils {
         return ld;
     }
 
-    public static long localDateToTimestamp(LocalDate localDate){
-        return localDate.atStartOfDay(ZONE_UTC).toEpochSecond();
+    public static long localDateToTimestamp(LocalDate d){
+        return LocalDateTime.of(d.getYear(), d.getMonthValue(), d.getDayOfMonth(), 12, 0).toEpochSecond(ZoneOffset.UTC);
     }
 }

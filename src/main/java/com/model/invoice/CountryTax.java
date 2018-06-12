@@ -1,4 +1,4 @@
-package com.model.report;
+package com.model.invoice;
 
 /**
  * Created by alejandrosantamaria on 12/06/18.

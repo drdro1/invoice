@@ -1,4 +1,4 @@
-package com.model.report;
+package com.model.invoice;
 
 import lombok.Data;
 

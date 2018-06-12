@@ -1,6 +1,8 @@
-package com.model.report;
+package com.model.invoice;
 
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Created by alejandrosantamaria on 12/06/18.
@@ -9,5 +11,5 @@ import lombok.Data;
 public class Account {
     private String name;
     private String currency;
-    private String[] addresses;
+    private List<String> addresses;
 }

@@ -1,6 +1,6 @@
 package com.web;
 
-import com.model.report.InvoiceQuery;
+import com.model.invoice.InvoiceQuery;
 import com.processor.VaultInvoicer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

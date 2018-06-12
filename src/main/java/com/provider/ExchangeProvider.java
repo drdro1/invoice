@@ -42,8 +42,6 @@ public class ExchangeProvider {
 
     @Cacheable(value = "ethusd", key = "#localDate")
     public Double getEtherUsd(LocalDate localDate) {
-        log.info("Calling CryptoCompare:{}", localDate);
-
         Double toRet = null;
 
         HashMap<String, HashMap<String, Double>> mapResult = cryptoCompareClient.convert(

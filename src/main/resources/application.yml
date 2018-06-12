@@ -1,5 +1,7 @@
 server.port: 8080
 logging.level.springframework.web: DEBUG
 
+max.cache.size: 10000
+
 etherscan.url: http://api.etherscan.io
 cryptocompare.url: https://min-api.cryptocompare.com/

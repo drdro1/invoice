@@ -22,23 +22,26 @@ import java.util.List;
 @SpringBootTest
 @ActiveProfiles("test")
 public class EthereumTransactionProviderTest extends TestCase {
+    private static String testAddressFewTx = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
+    private final static String testAddressManyTx = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae";
+    private final static String testInvalidAddress = "0xde0b295669a9fd93d5f28d9ec85e40f4c";
+
     @Autowired private EthereumTransactionProvider ethereumTransactionProvider;
 
     @Test
     public void testInvalidAddress() throws Exception {
-        EthereumTransactionsMessage ethtxmsg = ethereumTransactionProvider.getEtherscanTransactions("0xde0198e4fb0959fab7521b6899abce999fd7dcb");
+        EthereumTransactionsMessage ethtxmsg = ethereumTransactionProvider.getEtherscanTransactions(testInvalidAddress);
 
         Assert.assertNotNull(ethtxmsg);
 
         List<EthereumTransaction> transactionList = ethtxmsg.getResult();
 
-        Assert.assertNotNull(transactionList);
-        Assert.assertFalse(transactionList.isEmpty());
+        Assert.assertTrue(transactionList.isEmpty());
     }
 
     @Test
     public void testGetEtherscanTransactions() throws Exception {
-        EthereumTransactionsMessage ethtxmsg = ethereumTransactionProvider.getEtherscanTransactions("0xede0198e4fb0959fab7521b6899abce999fd7dcb");
+        EthereumTransactionsMessage ethtxmsg = ethereumTransactionProvider.getEtherscanTransactions(testAddressFewTx);
 
         Assert.assertNotNull(ethtxmsg);
 
@@ -51,12 +54,16 @@ public class EthereumTransactionProviderTest extends TestCase {
     @Test
     public void testCache() throws Exception {
         long millis = System.currentTimeMillis();
-        EthereumTransactionsMessage ethTxMsg = ethereumTransactionProvider.getEtherscanTransactions("0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae");
-        log.info("Time={}", (System.currentTimeMillis()-millis));
+        EthereumTransactionsMessage ethTxMsg = ethereumTransactionProvider.getEtherscanTransactions(testAddressManyTx);
+        long timeNoCache = System.currentTimeMillis()-millis;
+        log.info("TimeNoCache={}", (timeNoCache));
         Thread.sleep(1000);
 
         millis = System.currentTimeMillis();
-        ethTxMsg = ethereumTransactionProvider.getEtherscanTransactions("0xede0198e4fb0959fab7521b6899abce999fd7dcb");
-        log.info("Time={}", (System.currentTimeMillis() - millis));
+        ethTxMsg = ethereumTransactionProvider.getEtherscanTransactions(testAddressManyTx);
+        long timeWithCache = System.currentTimeMillis()-millis;
+        log.info("TimeWithCache={}", timeWithCache);
+
+        Assert.assertTrue(timeNoCache > (10 * timeWithCache));
     }
 }

@@ -13,10 +13,10 @@ public class EthereumUtilsTest extends TestCase{
 
     @Test
     public void testIsValidAddress(){
-        Assert.assertTrue(EthereumUtils.isValidAddress("0xd654bDD32FC99471455e86C2E7f7D7b6437e9179".toLowerCase()));
-        Assert.assertFalse(EthereumUtils.isValidAddress("0xh654bDD32FC99471455e86C2E7f7D7b6437e9179".toLowerCase()));
-        Assert.assertFalse(EthereumUtils.isValidAddress("0xh654dbDD32FC99471455e86C2E7f7D7b6437e9179".toLowerCase()));
-        Assert.assertFalse(EthereumUtils.isValidAddress("0xh654dbDD32FC99471455e86C2E7f7D7b7e9179".toLowerCase()));
+        Assert.assertTrue(EthereumUtils.isValidAddress("0x98e4ea439617ddd70ca66d41a543fefd931ebee0"));
+        Assert.assertFalse(EthereumUtils.isValidAddress("0x98h4ea439617ddd70ca66d41a543fefd931ebee0"));
+        Assert.assertFalse(EthereumUtils.isValidAddress("0x8e4ea439617ddd70ca66d41a543fefd931ebee0"));
+        Assert.assertFalse(EthereumUtils.isValidAddress("0x198e4ea439617ddd70ca66d41a543fefd931ebee0"));
     }
 
     @Test

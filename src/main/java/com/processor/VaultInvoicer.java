@@ -2,10 +2,10 @@ package com.processor;
 
 import com.model.ethereum.EthereumTransaction;
 import com.model.ethereum.EthereumTransactionsMessage;
-import com.model.report.Account;
+import com.model.invoice.Account;
 import com.model.report.DailyReport;
-import com.model.report.InvoiceQuery;
-import com.model.report.Period;
+import com.model.invoice.InvoiceQuery;
+import com.model.invoice.Period;
 import com.provider.EthereumTransactionProvider;
 import com.provider.ExchangeProvider;
 import com.utils.EthereumUtils;

@@ -28,7 +28,7 @@ import java.util.Map;
 public class PositionCalculatorTest extends TestCase {
 
 //    private static String testAddress = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae";
-    private static String testAddress = "0x98E4EA439617DDD70cA66D41A543FEFD931EBEe0".toLowerCase();
+    private static String testAddress = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
 
     @Autowired EthereumTransactionProvider ethereumTransactionProvider;
     @Autowired PositionCalculator positionCalculator;
@@ -56,5 +56,6 @@ public class PositionCalculatorTest extends TestCase {
 
         Map<LocalDate, DailyReport> dailyReportMap = positionCalculator.generateFullReport(
                 transactionList, testAddress, mapListDailyTransactions);
+
     }
 }

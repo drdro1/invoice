@@ -8,13 +8,8 @@ import feign.RequestLine;
  * Created by alejandrosantamaria on 09/06/18.
  */
 public interface EtherscanClient {
-    @RequestLine("GET /api?module={module}" +
-            "&action={action}" +
-            "&address={address}" +
-            "&startblock={startblock}" +
-            "&endblock={endblock}" +
-            "&sort={sort}" +
-            "&apikey={apikey}")
+    @RequestLine("GET /api?module={module}&action={action}&address={address}&" +
+            "startblock={startblock}&endblock={endblock}&sort={sort}&apikey={apikey}")
     EthereumTransactionsMessage getTransactions(
                                 @Param("module") String module,
                                 @Param("action") String action,
