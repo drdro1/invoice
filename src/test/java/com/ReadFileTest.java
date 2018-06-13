@@ -1,6 +1,7 @@
 package com;
 
 import lombok.AllArgsConstructor;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -40,7 +41,7 @@ public class ReadFileTest {
             e.printStackTrace();
         }
 
-        inputList.stream().forEach(rate -> {System.out.println(rate.localDate + "," + rate.rate);});
+        Assert.assertTrue(inputList.size() > 0);
     }
 
 

@@ -3,5 +3,12 @@ logging.level.springframework.web: DEBUG
 
 max.cache.size: 10000
 
+service.month.fee: 0.5
+flat.month.fee: 5000
+invoice.crypto.currency: ethereum
+invoice.fiat.currency: USD
+
 etherscan.url: http://api.etherscan.io
 cryptocompare.url: https://min-api.cryptocompare.com/
+
+spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false

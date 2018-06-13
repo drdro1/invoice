@@ -3,6 +3,7 @@ package com.processor;
 import com.model.ethereum.EthereumTransaction;
 import com.model.report.DailyReport;
 import com.utils.DateTimeUtils;
+import com.utils.EthereumUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -39,21 +40,27 @@ public class PositionCalculator {
         LocalDate dateIterator = DateTimeUtils.unixTimestampToLocalDate(txList.get(0).getTimeStamp());
         LocalDate lastDate = DateTimeUtils.unixTimestampToLocalDate(txList.get(txList.size()-1).getTimeStamp());
 
-        BigInteger total = new BigInteger("0");
+        BigInteger total = BigInteger.ZERO;
         for(;!dateIterator.isAfter(lastDate); dateIterator = dateIterator.plusDays(1)){
             List<EthereumTransaction> dayTxs = mapDailyTransactions.get(dateIterator);
 
+            DailyReport dailyReport = new DailyReport();
             if ( dayTxs != null ) {
                 BigInteger dayTotal = sumTransactions(dayTxs, address);
                 total = total.add(dayTotal);
 
-                DailyReport dailyReport = new DailyReport();
                 dailyReport.setTransactionList(dayTxs);
                 dailyReport.setTotalBalance(total);
                 dailyReport.setDayBalance(dayTotal);
-
-                dailyReportMap.put(dateIterator, dailyReport);
+                System.out.println(dateIterator + "," + dayTotal.divide(EthereumUtils.WEI_FACTOR) + "," + total.divide(EthereumUtils.WEI_FACTOR));
+            }else{
+                dailyReport.setTransactionList(dayTxs);
+                dailyReport.setTotalBalance(total);
+                dailyReport.setDayBalance(BigInteger.ZERO);
+                System.out.println(dateIterator + "," + 0 + "," + total.divide(EthereumUtils.WEI_FACTOR));
             }
+
+            dailyReportMap.put(dateIterator, dailyReport);
         }
 
         return dailyReportMap;

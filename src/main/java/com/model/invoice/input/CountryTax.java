@@ -11,4 +11,8 @@ public enum CountryTax {
     private CountryTax(double rate){
         this.rate = rate;
     }
+
+    public double getRate(){
+        return this.rate;
+    }
 }

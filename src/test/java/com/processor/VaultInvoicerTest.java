@@ -1,12 +1,14 @@
 package com.processor;
 
 import com.google.common.collect.Lists;
+import com.model.invoice.Period;
 import com.model.invoice.input.Account;
 import com.model.invoice.input.CountryTax;
 import com.model.invoice.input.InvoiceQuery;
-import com.model.invoice.Period;
+import com.model.invoice.output.Invoice;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,8 @@ import java.time.LocalDate;
 @SpringBootTest
 @ActiveProfiles("test")
 public class VaultInvoicerTest extends TestCase {
-    private static String testAddress = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
+//    private static String testAddress = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
+    private static String testAddress = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae";
 
     @Autowired VaultInvoicer vaultInvoicer;
 
@@ -42,6 +45,10 @@ public class VaultInvoicerTest extends TestCase {
 
         invoiceQuery.setAccount(account);
 
-        ResponseEntity vaultInvoice = vaultInvoicer.getVaultInvoice(invoiceQuery);
+        ResponseEntity<Invoice> responseEntity = vaultInvoicer.getVaultInvoice(invoiceQuery);
+
+        Invoice invoice = responseEntity.getBody();
+
+        Assert.assertTrue(invoice.getTotal().getAmount() > 0.0);
     }
 }

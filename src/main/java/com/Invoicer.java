@@ -6,11 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-public class Invoice{
+public class Invoicer {
 	public static void main(String[] args) {
 		System.out.println("Starting Invoice app...");
-		SpringApplication.run(Invoice.class, args);
+		SpringApplication.run(Invoicer.class, args);
 	}
-
-
 }
