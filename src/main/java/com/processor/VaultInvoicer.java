@@ -1,15 +1,15 @@
 package com.processor;
 
+import com.Invoice;
 import com.model.ethereum.EthereumTransaction;
 import com.model.ethereum.EthereumTransactionsMessage;
-import com.model.invoice.Account;
-import com.model.report.DailyReport;
-import com.model.invoice.InvoiceQuery;
 import com.model.invoice.Period;
+import com.model.invoice.input.Account;
+import com.model.invoice.input.InvoiceQuery;
+import com.model.report.DailyReport;
 import com.provider.EthereumTransactionProvider;
 import com.provider.ExchangeProvider;
 import com.utils.EthereumUtils;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,37 +46,41 @@ public class VaultInvoicer {
     public ResponseEntity getVaultInvoice(InvoiceQuery invoiceQuery){
         Period period = invoiceQuery.getPeriod();
         String validRangeMsg = isValidPeriod(period);
+        Account account = invoiceQuery.getAccount();
+
         if ( !validRangeMsg.equals("OK") )
             return new ResponseEntity(validRangeMsg, HttpStatus.BAD_REQUEST);
 
         if ( invoiceQuery.getTax() == null )
             return new ResponseEntity("Please specify tax rate", HttpStatus.BAD_REQUEST);
 
-        if ( CollectionUtils.isEmpty(invoiceQuery.getAccounts()) ) {
-            return new ResponseEntity("Please provide at least one account", HttpStatus.BAD_REQUEST);
+        if ( account == null ) {
+            return new ResponseEntity("Please provide an account to process", HttpStatus.BAD_REQUEST);
         }
 
-        for(Account account : invoiceQuery.getAccounts()){
-            //First check if addresses are valid
-            for(String address : account.getAddresses() )
-                if ( !EthereumUtils.isValidAddress(address) )
-                    return new ResponseEntity("Invalid ethereum address: " + address, HttpStatus.BAD_REQUEST);
+        //First check if addresses are valid
+        for(String address : account.getAddresses() )
+            if ( !EthereumUtils.isValidAddress(address) )
+                return new ResponseEntity("Invalid ethereum address: " + address, HttpStatus.BAD_REQUEST);
 
-            for(String address : account.getAddresses() ){
-                EthereumTransactionsMessage etherscanTransactions =
-                        ethereumTransactionProvider.getEtherscanTransactions(address);
 
-                List<EthereumTransaction> txList = etherscanTransactions.getResult();
-                if ( !txList.isEmpty() ) {
-                    Map<LocalDate, List<EthereumTransaction>> dailyTxMapList =
-                            positionCalculator.getMapListDailyTransactions(txList);
+        Invoice invoice = new Invoice();
 
-                    Map<LocalDate, DailyReport> fullReportMap =
-                            positionCalculator.generateFullReport(txList, address, dailyTxMapList);
+        for(String address : account.getAddresses() ){
+            EthereumTransactionsMessage etherscanTransactions =
+                    ethereumTransactionProvider.getEtherscanTransactions(address);
 
-                    double averageFiatPosition =
-                            calculateAverageFiatPosition(period.getStart_date(), period.getEnd_date(), fullReportMap);
-                }
+            List<EthereumTransaction> txList = etherscanTransactions.getResult();
+            if ( !txList.isEmpty() ) {
+                Map<LocalDate, List<EthereumTransaction>> dailyTxMapList =
+                        positionCalculator.getMapListDailyTransactions(txList);
+
+                Map<LocalDate, DailyReport> fullReportMap =
+                        positionCalculator.generateFullReport(txList, address, dailyTxMapList);
+
+                double averageFiatPosition =
+                        calculateAverageFiatPosition(period.getStart_date(), period.getEnd_date(), fullReportMap);
+
             }
         }
 

@@ -23,7 +23,6 @@ public class PositionCalculator {
     public Map<LocalDate, List<EthereumTransaction>> getMapListDailyTransactions(
             List<EthereumTransaction> transactionList) {
 
-        //Convert to map
         Map<LocalDate, List<EthereumTransaction>> mapDailyTx = transactionList.stream()
                 .collect(Collectors.groupingBy(ethereumTransaction ->
                         DateTimeUtils.unixTimestampToLocalDate(ethereumTransaction.getTimeStamp())));
@@ -54,11 +53,7 @@ public class PositionCalculator {
                 dailyReport.setDayBalance(dayTotal);
 
                 dailyReportMap.put(dateIterator, dailyReport);
-                System.out.println(dateIterator + "," + dayTxs.size() + "," + total);
-            }else
-                System.out.println(dateIterator + "," + 0 + "," + total);
-
-//            log.info("For dateIterator={} totalBalance{}", dateIterator, total);
+            }
         }
 
         return dailyReportMap;

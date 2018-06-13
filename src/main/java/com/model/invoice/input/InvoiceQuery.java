@@ -1,8 +1,7 @@
-package com.model.invoice;
+package com.model.invoice.input;
 
+import com.model.invoice.Period;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * Created by alejandrosantamaria on 12/06/18.
@@ -10,6 +9,6 @@ import java.util.List;
 @Data
 public class InvoiceQuery {
     private Period period;
-    private List<Account> accounts;
+    private Account account;
     private CountryTax tax;
 }

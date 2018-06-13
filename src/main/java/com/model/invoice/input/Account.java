@@ -1,4 +1,4 @@
-package com.model.invoice;
+package com.model.invoice.input;
 
 import lombok.Data;
 

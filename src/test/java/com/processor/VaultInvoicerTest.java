@@ -1,9 +1,9 @@
 package com.processor;
 
 import com.google.common.collect.Lists;
-import com.model.invoice.Account;
-import com.model.invoice.CountryTax;
-import com.model.invoice.InvoiceQuery;
+import com.model.invoice.input.Account;
+import com.model.invoice.input.CountryTax;
+import com.model.invoice.input.InvoiceQuery;
 import com.model.invoice.Period;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class VaultInvoicerTest extends TestCase {
         account.setCurrency("ethereum");
         account.setAddresses(Lists.newArrayList(testAddress));
 
-        invoiceQuery.setAccounts(Lists.newArrayList(account));
+        invoiceQuery.setAccount(account);
 
         ResponseEntity vaultInvoice = vaultInvoicer.getVaultInvoice(invoiceQuery);
     }

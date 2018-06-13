@@ -46,7 +46,7 @@ public class ExchangeProviderTest extends TestCase {
 
     @Test
     public void testGetMultipleEtherUsd() throws Exception {
-        LocalDate startDate = LocalDate.of(2018, 1, 1);
+        LocalDate startDate = LocalDate.of(2013, 1, 1);
         LocalDate endDate = LocalDate.now();
 
         long millis = System.currentTimeMillis();

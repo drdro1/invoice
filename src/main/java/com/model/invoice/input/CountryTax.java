@@ -1,4 +1,4 @@
-package com.model.invoice;
+package com.model.invoice.input;
 
 /**
  * Created by alejandrosantamaria on 12/06/18.

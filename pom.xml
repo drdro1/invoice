@@ -10,17 +10,15 @@
 
     <properties>
         <spring-version>1.5.1.RELEASE</spring-version>
-        <spring-mongo-version>1.10.0.RELEASE</spring-mongo-version>
-        <mongo-driver-version>3.4.2</mongo-driver-version>
         <springfox-swagger-version>2.6.1</springfox-swagger-version>
-        <jsonwebtoken-version>0.7.0</jsonwebtoken-version>
+        <spring-context-support-version>4.3.6.RELEASE</spring-context-support-version>
         <apache-commons-version>3.5</apache-commons-version>
         <commons-collections4-version>4.1</commons-collections4-version>
         <apache-httpclient-version>4.5.3</apache-httpclient-version>
         <apache-httpcore-version>4.4.6</apache-httpcore-version>
         <google-guava-version>21.0</google-guava-version>
         <lombok-version>1.16.14</lombok-version>
-
+        <feign-version>9.3.1</feign-version>
     </properties>
 
     <parent>
@@ -32,19 +30,6 @@
     <build>
         <finalName>invoice</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -66,7 +51,6 @@
         </plugins>
     </build>
 
-
     <packaging>jar</packaging>
 
     <dependencies>
@@ -84,21 +68,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
-            <version>${spring-mongo-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo-driver-version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -117,21 +87,6 @@
             <version>${springfox-swagger-version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jsonwebtoken-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons-version}</version>
@@ -140,16 +95,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${apache-httpclient-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>${apache-httpcore-version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -164,22 +109,27 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>9.3.1</version>
+            <version>${feign-version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-gson</artifactId>
-            <version>9.3.1</version>
+            <version>${feign-version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-slf4j</artifactId>
-            <version>9.3.1</version>
+            <version>${feign-version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-context-support-version}</version>
         </dependency>
     </dependencies>
 </project>
