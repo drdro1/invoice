@@ -1,4 +1,4 @@
-package com.model.Ethereum;
+package com.model.ethereum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
