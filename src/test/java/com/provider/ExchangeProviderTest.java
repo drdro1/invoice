@@ -3,6 +3,7 @@ package com.provider;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +26,10 @@ public class ExchangeProviderTest extends TestCase {
     @Test
     public void testGetEtherUsd() throws Exception {
         Double ethUsd = exchangeProvider.getEtherUsd(LocalDate.of(2018, 6, 7));
-        Assert.assertEquals(ethUsd, 0.4, 0.001);
+        Assert.assertEquals(ethUsd, 604.44, 0.001);
     }
 
-    @Test
-    public void testCache() throws Exception {
-        long millis = System.currentTimeMillis();
-        Double ethUsd = exchangeProvider.getEtherUsd(LocalDate.of(2018, 6, 7));
-        long timeNoCache = System.currentTimeMillis()-millis;
-        log.info("TimeNoCache={}", (timeNoCache));
-        Thread.sleep(1000);
-
-        millis = System.currentTimeMillis();
-        ethUsd = exchangeProvider.getEtherUsd(LocalDate.of(2018, 6, 7));
-        long timeWithCache = System.currentTimeMillis()-millis;
-        log.info("TimeWithCache={}", timeWithCache);
-
-        Assert.assertTrue(timeNoCache > (10 * timeWithCache));
-    }
-
+    @Ignore
     @Test
     public void testGetMultipleEtherUsd() throws Exception {
         LocalDate startDate = LocalDate.of(2013, 1, 1);

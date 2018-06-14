@@ -68,27 +68,6 @@ public class ExchangeProvider {
         return toRet;
     }
 
-//    private void readFileRates(){
-//        String filepath = "ethUsd.csv";
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
-//
-//        try {
-//            File file = new ClassPathResource(filepath).getFile();
-//            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-//            Map<LocalDate, Double> map = br.lines()
-//                    .map(line -> {
-//                        String[] tokens = line.split(",");
-//                        return new Rate(LocalDate.parse(tokens[0], dtf), Double.valueOf(tokens[1]));
-//                    })
-//                    .collect(Collectors.toMap(Rate::getLocalDate, Rate::getRate));
-//            br.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private void readFileRates(){
         String filepath = "ethusd.csv";
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");

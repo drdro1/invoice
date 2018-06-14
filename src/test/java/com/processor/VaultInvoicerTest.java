@@ -27,21 +27,22 @@ import java.time.LocalDate;
 @SpringBootTest
 @ActiveProfiles("test")
 public class VaultInvoicerTest extends TestCase {
-//    private static String testAddress = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
-    private static String testAddress = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae";
+    private static String testAddress1 = "0x281055afc982d96fab65b3a49cac8b878184cb16";
+    private static String testAddress2 = "0x98e4ea439617ddd70ca66d41a543fefd931ebee0";
 
     @Autowired VaultInvoicer vaultInvoicer;
 
     @Test
     public void testGetVaultInvoice() throws Exception {
         InvoiceQuery invoiceQuery = new InvoiceQuery();
-        invoiceQuery.setPeriod(new Period(LocalDate.of(2018, 2, 1), LocalDate.of(2018, 2, 28)));
+        invoiceQuery.setPeriod(new Period(LocalDate.of(2018, 3, 1), LocalDate.of(2018, 3, 31)));
         invoiceQuery.setTax(CountryTax.france);
 
         Account account = new Account();
         account.setName("test");
         account.setCurrency("ethereum");
-        account.setAddresses(Lists.newArrayList(testAddress));
+        account.setAddresses(Lists.newArrayList(testAddress1, testAddress2));
+
 
         invoiceQuery.setAccount(account);
 
@@ -49,6 +50,6 @@ public class VaultInvoicerTest extends TestCase {
 
         Invoice invoice = responseEntity.getBody();
 
-        Assert.assertTrue(invoice.getTotal().getAmount() > 0.0);
+        Assert.assertEquals(invoice.getTotal().getAmount(), 57405424.136767544, 0.1);
     }
 }

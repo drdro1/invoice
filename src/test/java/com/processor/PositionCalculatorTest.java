@@ -33,9 +33,6 @@ public class PositionCalculatorTest extends TestCase {
     @Autowired EthereumTransactionProvider ethereumTransactionProvider;
     @Autowired PositionCalculator positionCalculator;
 
-    public void testCalculate() throws Exception {
-
-    }
 
     @Test
     public void testGetMapListDailyTransactions() throws Exception {

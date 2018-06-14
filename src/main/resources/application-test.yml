@@ -3,7 +3,7 @@ logging.level.springframework.web: DEBUG
 
 max.cache.size: 10000
 
-service.month.fee: 0.5
+service.month.fee: 0.05
 flat.month.fee: 5000
 invoice.crypto.currency: ethereum
 invoice.fiat.currency: USD

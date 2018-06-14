@@ -3,7 +3,6 @@ package com.processor;
 import com.model.ethereum.EthereumTransaction;
 import com.model.report.DailyReport;
 import com.utils.DateTimeUtils;
-import com.utils.EthereumUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -48,18 +47,13 @@ public class PositionCalculator {
             if ( dayTxs != null ) {
                 BigInteger dayTotal = sumTransactions(dayTxs, address);
                 total = total.add(dayTotal);
-
-                dailyReport.setTransactionList(dayTxs);
-                dailyReport.setTotalBalance(total);
                 dailyReport.setDayBalance(dayTotal);
-                System.out.println(dateIterator + "," + dayTotal.divide(EthereumUtils.WEI_FACTOR) + "," + total.divide(EthereumUtils.WEI_FACTOR));
             }else{
-                dailyReport.setTransactionList(dayTxs);
-                dailyReport.setTotalBalance(total);
                 dailyReport.setDayBalance(BigInteger.ZERO);
-                System.out.println(dateIterator + "," + 0 + "," + total.divide(EthereumUtils.WEI_FACTOR));
             }
 
+            dailyReport.setTransactionList(dayTxs);
+            dailyReport.setTotalBalance(total);
             dailyReportMap.put(dateIterator, dailyReport);
         }
 
